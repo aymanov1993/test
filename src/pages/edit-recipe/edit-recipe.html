@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> {{ mode }} Recipe</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="recipreForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Title</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Desc</ion-label>
+        <ion-textarea formControlName="desc"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Diff</ion-label>
+        <ion-select formControlName="diff">
+          <ion-option *ngFor="let op of options" [value]="op">{{ op }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <button type="button" ion-button clear block (click)="showManageIngredient()">Manage Ingredient</button>
+    <ion-list formArrayName="ingredients">
+      <ion-item *ngFor="let ing of recipreForm.get('ingredients').controls; let i = index">
+        <ion-label floating>Name</ion-label>
+        <ion-input type="text" [formControlName]="i">{{ ing }}</ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="submit" block>{{ mode }} recipe</button>
+  </form>
+
+</ion-content>
