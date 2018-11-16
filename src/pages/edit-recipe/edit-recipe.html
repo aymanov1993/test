@@ -32,7 +32,7 @@
         <ion-input type="text" [formControlName]="i">{{ ing }}</ion-input>
       </ion-item>
     </ion-list>
-    <button ion-button type="submit" block>{{ mode }} recipe</button>
+    <button ion-button type="submit" block [disabled]="!recipreForm.valid">{{ mode }} recipe</button>
   </form>
 
 </ion-content>

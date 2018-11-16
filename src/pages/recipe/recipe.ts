@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Recipe } from '../../models/recipe';
 import { EditRecipePage } from '../edit-recipe/edit-recipe';
+import { RecipesService } from '../../services/recipe';
+import { shoppingListService } from '../../services/shopping-list';
 
 /**
  * Generated class for the RecipePage page.
@@ -18,7 +20,7 @@ import { EditRecipePage } from '../edit-recipe/edit-recipe';
 export class RecipePage implements OnInit {
   recipe : Recipe
   index : number
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private recipeService :RecipesService, private slService : shoppingListService, private toastCtrl : ToastController) {
   }
 
   ngOnInit(){
@@ -32,6 +34,19 @@ export class RecipePage implements OnInit {
 
   onEditRecipe(){
     this.navCtrl.push(EditRecipePage, {mode:'Edit', recipe:this.recipe, index : this.index})
+  }
+
+  onDeleteRecipe(){
+    this.recipeService.removeRecipe(this.index)
+    this.navCtrl.popToRoot()
+  }
+
+  addIngredientsToList(){
+    this.slService.addItems(this.recipe.ingredient)
+    this.toastCtrl.create({
+      message : 'Items are added to shopping list!',
+      duration : 1500,
+    }).present()
   }
 
 }
